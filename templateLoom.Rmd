@@ -1,0 +1,71 @@
+---
+title: "Looming Patterns"
+author: "Federico Mattiello"
+output:
+  pdf_document:
+    toc: false
+---
+
+
+
+This report is automatically generated with the _R_ language 
+
+
+##INPUTS
+Warping
+```{r parameters, echo=TRUE}
+warp <- makeWarping()
+rowsSeq <- seq_len(nrow(warp))
+colsSeq <- seq_len(ncol(warp))
+image(x = colsSeq, y = rowsSeq, t(warp), 
+    col = c("gray80", "blue3"), 
+    xaxt = "n", xlab = "", ylab = "",
+    main = "Warping pattern")
+axis(side = 1, at = colsSeq, labels = colsSeq)
+title(ylab = "heddles", xlab = "Warping", line = 2)
+abline(v = colsSeq - .5)
+abline(h = rowsSeq - .5)
+```
+
+
+
+##OUTPUTS
+  
+  
+###Patterns Graphs
+
+The following graphs show desired all patterns computed with the current warping design
+
+```{r plots, echo=TRUE, fig.height=4}
+patterns <- weave()
+warping <- makeWarping()
+rowsSeq <- seq_len(nrow(patterns[[1L]]))
+colsSeq <- seq_len(ncol(patterns[[1L]]))
+
+for (iPlot in seq_along(patterns))
+{
+  image(x = rowsSeq, y = colsSeq, patterns[[iPlot]], 
+      col = c("gray80", "blue3"), 
+      yaxt = "n", xlab = "", ylab = "",
+      main = paste0("pattern: ", iPlot))
+  axis(side = 2, at = colsSeq, labels = rev(colsSeq))
+  title(ylab = "sequence", xlab = "Warping", line = 2)
+  abline(v = seq_len(ncol(warping)) - .5)
+  abline(h = 1:(5 * input$patternLength) - .5)
+}
+```
+  
+
+---------------------------------------------------------------------------  
+
+
+##R Session Information  
+
+The R session information (including the OS info, R version and all 
+packages used):
+
+```{r session-info}
+sessionInfo()
+Sys.time()
+```
+
